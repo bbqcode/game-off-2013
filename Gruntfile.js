@@ -34,7 +34,7 @@ module.exports = function (grunt) {
         },
         watch: {
             scripts: {
-                files: ['*.html'],
+                files: ['*.html', 'src/*.js'],
                 options: {
                     livereload: LIVERELOAD_PORT
                 }
