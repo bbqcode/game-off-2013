@@ -8,12 +8,12 @@ module.exports = function (grunt) {
     grunt.initConfig({
         connect: {
             options: {
-                port: 9000,
+                port: 9001,
                 hostname: 'localhost'
             },
             server: {
                 options: {
-                    base: "Scripts"
+                    base: ""
                 }
             },
             livereload: {
@@ -21,7 +21,7 @@ module.exports = function (grunt) {
                     middleware: function (connect) {
                         return [
                             lrSnippet,
-                            mountFolder(connect, "Scripts")
+                            mountFolder(connect, "")
                         ];
                     }
                 }
