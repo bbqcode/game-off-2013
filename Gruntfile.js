@@ -11,11 +11,6 @@ module.exports = function (grunt) {
                 port: 9001,
                 hostname: 'localhost'
             },
-            server: {
-                options: {
-                    base: ""
-                }
-            },
             livereload: {
                 options: {
                     middleware: function (connect) {
@@ -46,14 +41,9 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-open');
 
-    grunt.registerTask('livereload', [
+    grunt.registerTask('server', [
         'connect:livereload',
         'open',
         'watch'
-    ]);
-
-    grunt.registerTask('server', [
-        'open',
-        'connect:server:keepalive'
     ]);
 };
