@@ -1,16 +1,12 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-    <meta name="viewport" content="width=800,target-densitydpi=device-dpi,user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="full-screen" content="yes" />
-    <meta name="screen-orientation" content="portrait" />
-    <meta name="x5-fullscreen" content="true" />
-    <meta name="360-fullscreen" content="true" />
+    <title>The Golden Command</title>
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
     <style>
         body, canvas, div {
+            margin: 0;
+            padding: 0;
             -moz-user-select: none;
             -webkit-user-select: none;
             -ms-user-select: none;
@@ -18,9 +14,12 @@
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
         }
     </style>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+    <script src="/libs/phaser.js"></script>
+    <script src="/src/game.js"></script>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="450"></canvas>
-    <script src="/src/cocos2d.js"></script>
+    <div id="game">
+    </div>
 </body>
 </html>

@@ -1,61 +1,20 @@
-﻿
-var MyLayer = cc.Layer.extend({
-    isMouseDown: false,
-    helloImg: null,
-    helloLabel: null,
-    circle: null,
-    sprite: null,
+﻿/// <reference path="../libs/phaser.js" />
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', { preload: preload, create: create });
 
-    init: function () {
+function preload() {
 
-        //////////////////////////////
-        // 1. super init first
-        this._super();
+    //  You can fill the preloader with as many assets as your game requires
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
-        var size = cc.Director.getInstance().getVisibleSize();
+    //  Here we are loading an image. The first parameter is the unique
+    //  string by which we'll identify the image later in our code.
 
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
-            s_CloseNormal,
-            s_CloseSelected,
-            function () {
-                cc.log("close");
-            }, this);
-        closeItem.setAnchorPoint(cc.p(0.5, 0.5));
+    //  The second parameter is the URL of the image (relative)
+    game.load.image('cactuar', 'assets/img/cactuar.png');
+}
 
-        var menu = cc.Menu.create(closeItem);
-        menu.setPosition(cc.p(0, 0));
-        this.addChild(menu, 1);
-        closeItem.setPosition(cc.p(size.width - 20, 20));
+function create() {
+    //  This creates a simple sprite that is using our loaded image and
+    //  displays it on-screen
+    game.add.sprite(0, 0, 'cactuar');
 
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
-        // position the label on the center of the screen
-        this.helloLabel.setPosition(cc.p(size.width / 2, size.height - 40));
-        // add the label as a child to this layer
-        this.addChild(this.helloLabel, 5);
-
-        // add "Helloworld" splash screen"
-        this.sprite = cc.Sprite.create(s_HelloWorld);
-        this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
-        this.sprite.setPosition(cc.p(size.width / 2, size.height / 2));
-        this.sprite.setScale(size.height / this.sprite.getContentSize().height);
-        this.addChild(this.sprite, 0);
-    }
-});
-
-var MyScene = cc.Scene.extend({
-    onEnter: function () {
-        this._super();
-        var layer = new MyLayer();
-        this.addChild(layer);
-        layer.init();
-    }
-});
+}
