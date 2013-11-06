@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="100" height="10" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="platformer_tiles" tilewidth="16" tileheight="16">
+  <image source="../tiles/platformer_tiles.png" width="304" height="96"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="10">
+  <data encoding="base64" compression="zlib">
+   eJzt0aENADAMA8HgblHY/RcsDigocsCdZG7pq4AfO32ARo+c8xhZK32ARo9Z9JhFj1n0mOEC8hABaw==
+  </data>
+ </layer>
+</map>
