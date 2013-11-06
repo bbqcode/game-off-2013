@@ -1,61 +1,94 @@
-﻿
-var MyLayer = cc.Layer.extend({
-    isMouseDown: false,
-    helloImg: null,
-    helloLabel: null,
-    circle: null,
-    sprite: null,
+﻿/// <reference path="../libs/phaser.js" />
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
 
-    init: function () {
+var cactuar;
+var cursors;
 
-        //////////////////////////////
-        // 1. super init first
-        this._super();
+var map = 
+[
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0] ,
+    [0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0] ,
+    [0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0]
+]
 
-        /////////////////////////////
-        // 2. add a menu item with "X" image, which is clicked to quit the program
-        //    you may modify it.
-        // ask director the window size
-        var size = cc.Director.getInstance().getVisibleSize();
+var rectangles = [];
+function preload() {
+    //  You can fill the preloader with as many assets as your game requires
+    game.stage.backgroundColor = '#007236';
+    //  Here we are loading an image. The first parameter is the unique
+    //  string by which we'll identify the image later in our code.
 
-        // add a "close" icon to exit the progress. it's an autorelease object
-        var closeItem = cc.MenuItemImage.create(
-            s_CloseNormal,
-            s_CloseSelected,
-            function () {
-                cc.log("close");
-            }, this);
-        closeItem.setAnchorPoint(cc.p(0.5, 0.5));
+    //  The second parameter is the URL of the image (relative)
 
-        var menu = cc.Menu.create(closeItem);
-        menu.setPosition(cc.p(0, 0));
-        this.addChild(menu, 1);
-        closeItem.setPosition(cc.p(size.width - 20, 20));
+    
 
-        /////////////////////////////
-        // 3. add your codes below...
-        // add a label shows "Hello World"
-        // create and initialize a label
-        this.helloLabel = cc.LabelTTF.create("Hello World", "Impact", 38);
-        // position the label on the center of the screen
-        this.helloLabel.setPosition(cc.p(size.width / 2, size.height - 40));
-        // add the label as a child to this layer
-        this.addChild(this.helloLabel, 5);
+    game.load.image('cactuar', 'assets/img/cactuar.png');
+    
+}
 
-        // add "Helloworld" splash screen"
-        this.sprite = cc.Sprite.create(s_HelloWorld);
-        this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
-        this.sprite.setPosition(cc.p(size.width / 2, size.height / 2));
-        this.sprite.setScale(size.height / this.sprite.getContentSize().height);
-        this.addChild(this.sprite, 0);
+function create() {
+    //  This creates a simple sprite that is using our loaded image and
+    //  displays it on-screen
+    cactuar = game.add.sprite(0, 400, 'cactuar');
+    game.world.setBounds(-1000, -1000, 2000, 2000);
+
+    //  This will create a new object called "cursors", inside it will contain 4 objects: up, down, left and right.
+    //  These are all Phaser.Key objects, so anything you can do with a Key object you can do with these.
+    cursors = game.input.keyboard.createCursorKeys();
+
+
+    //constant x velocity
+    cactuar.body.velocity.x = 100;
+
+    var tileSize = 18;
+    for (var x = 0; x < map.length; x++) {
+        for (var y = 0; y < map[x].length; y++) {
+            var rect = new Phaser.Rectangle(y * tileSize,x * tileSize, tileSize, tileSize);
+            switch (map[x][y]) {
+                case 0:
+                    rect.color = '#000000';
+                    break;
+                case 1:
+                    rect.color = '#00ff00';
+                    break;
+                case 2:
+                    rect.color = '#0000ff';
+                    break;
+            }
+            rectangles.push(rect);
+        }
     }
-});
+}
 
-var MyScene = cc.Scene.extend({
-    onEnter: function () {
-        this._super();
-        var layer = new MyLayer();
-        this.addChild(layer);
-        layer.init();
+function update() {
+    if (cursors.right.isDown) {
+        cactuar.x += 4;
+    } else if (cursors.left.isDown) {
+        cactuar.x -= 4;
     }
-});
+    if (cursors.down.isDown) {
+        cactuar.y += 4;
+    } else if (cursors.up.isDown) {
+        cactuar.y -= 4;
+    }
+
+    if (cactuar.x > 800) {
+        cactuar.x = 0;
+    }
+}
+
+function render() {
+
+    game.debug.renderCameraInfo(game.camera, 302, 32);
+    game.debug.renderSpriteInfo(cactuar, 32, 200);
+    for (var x = 0; x < rectangles.length; x++) {
+        var r = rectangles[x];
+        game.debug.renderRectangle(r, r.color);
+    }
+}
