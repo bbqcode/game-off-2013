@@ -4,16 +4,16 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', { preload: preload, 
 var cactuar;
 var cursors;
 
-var map = 
+var map =
 [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ,
-    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0] ,
-    [0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0] ,
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+    [0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0],
     [0, 2, 1, 1, 1, 1, 1, 1, 0, 0, 0]
 ]
 
@@ -26,10 +26,10 @@ function preload() {
 
     //  The second parameter is the URL of the image (relative)
 
-    
 
-    game.load.image('cactuar', 'assets/img/cactuar.png');
-    
+    game.load.tileset('phaser', 'assets/tiles/platformer_tiles.png', 16, 16);
+    game.load.image('cactuar', 'assets/images/cactuar.png');
+
 }
 
 function create() {
@@ -46,10 +46,10 @@ function create() {
     //constant x velocity
     cactuar.body.velocity.x = 100;
 
-    var tileSize = 18;
+    var tileSize = 32;
     for (var x = 0; x < map.length; x++) {
         for (var y = 0; y < map[x].length; y++) {
-            var rect = new Phaser.Rectangle(y * tileSize,x * tileSize, tileSize, tileSize);
+            var rect = new Phaser.Rectangle(y * tileSize, x * tileSize, tileSize, tileSize);
             switch (map[x][y]) {
                 case 0:
                     rect.color = '#000000';
@@ -59,6 +59,9 @@ function create() {
                     break;
                 case 2:
                     rect.color = '#0000ff';
+                    break;
+                case 3:
+                    rect.color = '#ff0000';
                     break;
             }
             rectangles.push(rect);
