@@ -18,33 +18,44 @@ var map =
 ]
 
 var rectangles = [];
+
+var map;
+var tileset;
+var layer;
+
 function preload() {
     //  You can fill the preloader with as many assets as your game requires
-    game.stage.backgroundColor = '#007236';
+    //game.stage.backgroundColor = '#007236';
     //  Here we are loading an image. The first parameter is the unique
     //  string by which we'll identify the image later in our code.
 
     //  The second parameter is the URL of the image (relative)
 
-
-    game.load.tileset('phaser', 'assets/tiles/platformer_tiles.png', 16, 16);
-    game.load.image('cactuar', 'assets/images/cactuar.png');
+    game.load.tilemap('map_phaser', 'assets/maps/map.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tileset('phaser', 'assets/tiles/tiles_spritesheet.png', 70, 70);
+    //game.load.image('cactuar', 'assets/images/cactuar.png');
 
 }
 
 function create() {
     //  This creates a simple sprite that is using our loaded image and
     //  displays it on-screen
-    cactuar = game.add.sprite(0, 400, 'cactuar');
-    game.world.setBounds(-1000, -1000, 2000, 2000);
+    //cactuar = game.add.sprite(0, 400, 'cactuar');
+    //game.world.setBounds(-1000, -1000, 2000, 2000);
 
     //  This will create a new object called "cursors", inside it will contain 4 objects: up, down, left and right.
     //  These are all Phaser.Key objects, so anything you can do with a Key object you can do with these.
     cursors = game.input.keyboard.createCursorKeys();
 
+    map = game.add.tilemap('map_phaser');
+    tileset = game.add.tileset('phaser');
+    layer = game.add.tilemapLayer(0, 0, map.layers[0].width * tileset.tileWidth, 600, tileset, map, 0);
+
+    layer.fixedToCamera = false;
+    layer.resizeWorld();
 
     //constant x velocity
-    cactuar.body.velocity.x = 100;
+    //cactuar.body.velocity.x = 100;
 
     var tileSize = 32;
     for (var x = 0; x < map.length; x++) {
@@ -70,28 +81,28 @@ function create() {
 }
 
 function update() {
-    if (cursors.right.isDown) {
-        cactuar.x += 4;
-    } else if (cursors.left.isDown) {
-        cactuar.x -= 4;
-    }
-    if (cursors.down.isDown) {
-        cactuar.y += 4;
-    } else if (cursors.up.isDown) {
-        cactuar.y -= 4;
-    }
+    //if (cursors.right.isDown) {
+    //    cactuar.x += 4;
+    //} else if (cursors.left.isDown) {
+    //    cactuar.x -= 4;
+    //}
+    //if (cursors.down.isDown) {
+    //    cactuar.y += 4;
+    //} else if (cursors.up.isDown) {
+    //    cactuar.y -= 4;
+    //}
 
-    if (cactuar.x > 800) {
-        cactuar.x = 0;
-    }
+    //if (cactuar.x > 800) {
+    //    cactuar.x = 0;
+    //}
 }
 
 function render() {
 
-    game.debug.renderCameraInfo(game.camera, 302, 32);
-    game.debug.renderSpriteInfo(cactuar, 32, 200);
-    for (var x = 0; x < rectangles.length; x++) {
-        var r = rectangles[x];
-        game.debug.renderRectangle(r, r.color);
-    }
+    //game.debug.renderCameraInfo(game.camera, 302, 32);
+    //game.debug.renderSpriteInfo(cactuar, 32, 200);
+    //for (var x = 0; x < rectangles.length; x++) {
+    //    var r = rectangles[x];
+    //    game.debug.renderRectangle(r, r.color);
+    //}
 }
