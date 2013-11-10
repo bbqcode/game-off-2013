@@ -1,7 +1,6 @@
 ﻿/// <reference path="../libs/phaser.js" />
 define(['phaser', 'underscore', 'configs', 'src/player', 'src/level'], function (Phaser, _, configs, Player, Level) {
     var game;
-
     var Game = function () {
         Phaser.Game.call(this, configs.game.width, configs.game.height, Phaser.CANVAS, configs.game.canvasId,
         {
@@ -13,12 +12,12 @@ define(['phaser', 'underscore', 'configs', 'src/player', 'src/level'], function 
     Game.prototype = Object.create(Phaser.Game.prototype);
     Game.prototype.constructor = Game;
    
+
     function preload() {
         game.load.tilemap('tilemap', 'assets/maps/map3.json', null, Phaser.Tilemap.TILED_JSON);
         game.load.tileset('tileset', 'assets/tiles/sexy_tiles.png', 24, 24);
 
         game.load.spritesheet('player', 'assets/sprites/produde.png', 18, 48, 8);        game.load.image('background', 'assets/backgrounds/sunshine.png');
-
     }
 
     function create() {

@@ -1,4 +1,5 @@
-﻿define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {    
+﻿/// <reference path="../libs/phaser.js" />
+define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {
     var Player = function (game, spriteKey) {
         this.cursors = game.cursors;
         this.jumpTimer = 0;

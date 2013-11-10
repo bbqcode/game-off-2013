@@ -1,4 +1,5 @@
-﻿define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {
+﻿/// <reference path="../libs/phaser.js" />
+define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {
     var Level = function (game, tilemapKey, tilesetKey, backgroundKey) {
         this.bg = game.add.tileSprite(0, 0, configs.game.width, configs.game.height, backgroundKey);
         this.bg.fixedToCamera = true;
