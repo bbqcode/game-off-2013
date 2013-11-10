@@ -8,7 +8,6 @@ define(['phaser', 'underscore', 'configs', 'src/player', 'src/level'], function 
             preload: preload, create: create, update: update, render: render
         });
         game = this;
-        this.player = null;
     }
     
     Game.prototype = Object.create(Phaser.Game.prototype);
