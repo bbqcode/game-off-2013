@@ -22,7 +22,8 @@ var rectangles = [];
 var map;
 var tileset;
 var layer;
-
+var layer2;
+var bg;
 var dude;
 
 function preload() {
@@ -33,10 +34,10 @@ function preload() {
 
     //  The second parameter is the URL of the image (relative)
 
-    game.load.tilemap('map_phaser', 'assets/maps/map.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('map_phaser', 'assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tileset('phaser', 'assets/tiles/platformer_tiles.png', 16, 16);
 
-    game.load.spritesheet('dude', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);
+    game.load.spritesheet('dude', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);    game.load.image('background', 'assets/backgrounds/background2.png');
 
     //game.load.image('cactuar', 'assets/images/cactuar.png');
 
@@ -52,17 +53,25 @@ function create() {
     //  These are all Phaser.Key objects, so anything you can do with a Key object you can do with these.
     cursors = game.input.keyboard.createCursorKeys();
 
+    bg = game.add.tileSprite(0, 0, 800, 600, 'background');
+    bg.fixedToCamera = true;
+
     map = game.add.tilemap('map_phaser');
     tileset = game.add.tileset('phaser');
     var width = map.layers[0].width * tileset.tileWidth;
     var height = map.layers[0].height * tileset.tileHeight;
     layer = game.add.tilemapLayer(0, 0, width, height, tileset, map, 0);
+    layer2 = game.add.tilemapLayer(0, 0, width, height, tileset, map, 1);
 
     layer.fixedToCamera = false;
+    layer2.fixedToCamera = false;
     
+
+   
+
     tileset.setCollisionRange(0, tileset.tiles.length - 1, true, true, true, true)
 
-    dude = game.add.sprite(10, 0, 'dude');    dude.animations.add('walk');    dude.body.gravity.y = 10;
+    dude = game.add.sprite(10, 0, 'dude');    dude.animations.add('walk');    dude.animations.add()    dude.body.gravity.y = 10;
     dude.body.bounce.y = 0.1;
     dude.body.collideWorldBounds = true;
     game.camera.follow(dude);
@@ -94,13 +103,13 @@ function create() {
 }
 
 function update() {
-    game.physics.collide(dude, layer);
+    game.physics.collide(dude, layer2);
 
     dude.body.velocity.x = 0;
 
     if (cursors.up.isDown) {
         if (dude.body.touching.down) {
-            dude.body.velocity.y = -200;
+            dude.body.velocity.y = -400;
         }
     }
     else if (cursors.down.isDown) {
@@ -109,9 +118,11 @@ function update() {
 
     if (cursors.left.isDown) {
         dude.body.velocity.x = -150;
+        dude.scale.x = -1;
     }
     else if (cursors.right.isDown) {
         dude.body.velocity.x = 150;
+        dude.scale.x = 1;
     }
 
     if (dude.body.velocity.x !== 0) {
