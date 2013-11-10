@@ -1,5 +1,19 @@
 ﻿/// <reference path="../libs/phaser.js" />
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+var configs = {
+    game: {
+        width: 800,
+        height: 600,
+        canvasId: 'game'
+    },
+    gravity: 10,
+    bounce: 0.1
+};
+
+var game = new Phaser.Game(
+        configs.game.width, configs.game.height, Phaser.CANVAS, configs.game.canvasId,
+        {
+            preload: preload, create: create, update: update, render: render
+        });
 
 var cursors;
 
@@ -14,11 +28,14 @@ var player;
 var facing = 'right';
 var jumpButton;
 var jumpTimer = 0;
+
+
 function preload() {
     game.load.tilemap('map_phaser', 'assets/maps/map3.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.tileset('phaser', 'assets/tiles/sexy_tiles.png', 24, 24);
 
     game.load.spritesheet('player', 'assets/sprites/produde.png', 18, 48, 8);    game.load.image('background', 'assets/backgrounds/sunshine.png');
+
 }
 
 function create() {
@@ -41,14 +58,31 @@ function create() {
 
     tileset.setCollisionRange(0, tileset.total - 1, true, true, true, true)
 
-    player = game.add.sprite(10, 0, 'player');    player.animations.add('walk-right', [0, 1, 2, 3], 30, true);    player.animations.add('walk-left', [4, 5, 6, 7], 30, true);    player.animations.add()    player.body.gravity.y = 10;
-    player.body.bounce.y = 0.1;
-    player.body.collideWorldBounds = true;
+    player = new Player('player');    game.add.existing(player);
     game.camera.follow(player);
     layer.resizeWorld();
 
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 }
+
+var Player = function (spriteKey) {
+    this.facing = 'left';
+
+    Phaser.Sprite.call(this, game, 0, 0, spriteKey)
+    this.body.gravity.y = configs.gravity;
+    this.body.bounce.y = configs.bounce;
+
+    this.body.collideWorldBounds = true;
+
+    this.animations.add('walk-right', [0, 1, 2, 3], 30, true);
+    this.animations.add('walk-left', [4, 5, 6, 7], 30, true);
+}
+
+Player.prototype = Object.create(Phaser.Sprite.prototype);
+Player.prototype.constructor = Player;
+
+
+
 
 function update() {
     game.physics.collide(player, layer2);
