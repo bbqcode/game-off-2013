@@ -13,8 +13,8 @@ var bg;
 var player;
 
 function preload() {
-    game.load.tilemap('map_phaser', 'assets/maps/map2.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.tileset('phaser', 'assets/tiles/platformer_tiles.png', 16, 16);
+    game.load.tilemap('map_phaser', 'assets/maps/map3.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tileset('phaser', 'assets/tiles/sexy_tiles.png', 24, 24);
 
     game.load.spritesheet('player', 'assets/sprites/metalslug_mummy37x45.png', 37, 45, 18);    game.load.image('background', 'assets/backgrounds/sunshine.png');
 }
@@ -37,6 +37,7 @@ function create() {
     layer.fixedToCamera = false;
     layer2.fixedToCamera = false;
 
+    console.log(tileset);
     tileset.setCollisionRange(0, tileset.total - 1, true, true, true, true)
 
     player = game.add.sprite(10, 0, 'player');    player.animations.add('walk');    player.animations.add()    player.body.gravity.y = 10;
