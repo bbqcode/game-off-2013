@@ -1,9 +1,14 @@
-﻿define(['underscore', 'phaser', 'configs'], function (_,  Phaser, configs) {
-    var Player = function (game, cursors, spriteKey) {
-        this.cursors = cursors;
+﻿define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {    
+    var Player = function (game, spriteKey) {
+        this.cursors = game.cursors;
+        this.jumpTimer = 0;
+        this.game = game;
+
+        this.jumpVelocity = configs.player.jumpVelocity;
 
         this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.facing = 'left';
+
+        this.facing = 'right';
 
         Phaser.Sprite.call(this, game, 0, 0, spriteKey)
         this.body.gravity.y = configs.gravity;
@@ -13,46 +18,49 @@
 
         this.animations.add('walk-right', [0, 1, 2, 3], 30, true);
         this.animations.add('walk-left', [4, 5, 6, 7], 30, true);
+
+        game.add.existing(this);
+        game.camera.follow(this);
     }
 
     Player.prototype = Object.create(Phaser.Sprite.prototype);
     Player.prototype.constructor = Player;
 
     Player.prototype.update = function () {
-        var cursors = this.cursors;
-        var facing = this.facing;
-        var jumpButton = this.jumpButton;
+        this.game.physics.collide(this, this.game.level.collideLayer);
+
         this.body.velocity.x = 0;
 
-        if (cursors.left.isDown) {
+        if (this.cursors.left.isDown) {
             this.body.velocity.x = -150;
-            if (facing != 'left') {
-                facing = 'left';
+            if (this.facing != 'left') {
+                this.facing = 'left';
                 this.animations.play('walk-left');
             }
         }
-        else if (cursors.right.isDown) {
+        else if (this.cursors.right.isDown) {
             this.body.velocity.x = 150;
-            if (facing != 'right') {
-                facing = 'right';
+            if (this.facing != 'right') {
+                this.facing = 'right';
                 this.animations.play('walk-right');
             }
         }
         else {
-            if (facing != 'idle') {
+            if (this.facing != 'idle') {
                 this.animations.stop();
-                if (facing == 'right') {
+                if (this.facing == 'right') {
                     this.frame = 0;
                 } else {
                     this.frame = 4;
                 }
-                facing = 'idle';
+                this.facing = 'idle';
             }
         }
 
-        if (jumpButton.isDown && this.body.touching.down && this.time.now > jumpTimer) {
-            this.body.velocity.y = -400;
-            jumpTimer = this.time.now + 750;
+        
+        if (this.jumpButton.isDown && this.body.touching.down && this.game.time.now > this.jumpTimer) {
+            this.body.velocity.y = this.jumpVelocity;
+            this.jumpTimer = this.game.time.now + 750;
         }
     }
 
