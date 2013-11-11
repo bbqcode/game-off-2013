@@ -8,7 +8,6 @@ function (Phaser, Player, Level1, Loader, configs) {
         this.game.debug.renderBodies = [];
         this.game.cursors = this.game.input.keyboard.createCursorKeys();
         this.game.level = new Level1(this.game);
-        
     }
 
     function update() {
