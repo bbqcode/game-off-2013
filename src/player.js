@@ -1,9 +1,12 @@
 ﻿/// <reference path="../libs/phaser.js" />
-define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {
-    var Player = function (game, spriteKey) {
+define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, configs, assets) {
+
+    var Player = function (game) {
+        this.game = game;
+
+        this.playerSprite = assets.sprites.player;
         this.cursors = game.cursors;
         this.jumpTimer = 0;
-        this.game = game;
 
         this.jumpVelocity = configs.player.jumpVelocity;
 
@@ -11,16 +14,14 @@ define(['underscore', 'phaser', 'configs'], function (_, Phaser, configs) {
 
         this.facing = 'right';
 
-        Phaser.Sprite.call(this, game, 0, 0, spriteKey)
+        Phaser.Sprite.call(this, game, 0, 0, this.playerSprite.key)
         this.body.gravity.y = configs.gravity;
         this.body.bounce.y = configs.bounce;
 
         this.body.collideWorldBounds = true;
 
-        this.animations.add('walk-right', [0, 1, 2, 3], 30, true);
-        this.animations.add('walk-left', [4, 5, 6, 7], 30, true);
-
-        game.add.existing(this);
+        this.animations.add('walk-right', [0, 1, 2, 3], 10, true);
+        this.animations.add('walk-left', [4, 5, 6, 7], 10, true);        game.add.existing(this);
         game.camera.follow(this);
     }
 

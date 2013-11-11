@@ -10,10 +10,11 @@
     paths: {
         'underscore': 'libs/underscore',
         'phaser': 'libs/phaser',
-        'configs': 'src/configs'
+        'configs': 'src/configs',
+        'assets': 'src/assets'
     }
 })
 
-require(['src/game'], function (Game) {
-    new Game();
+require(['src/engine'], function (Engine) {
+   new Engine();
 });
