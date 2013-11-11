@@ -5,13 +5,10 @@
 
         Phaser.Sprite.call(this, game, x, y);
 
-        this.bounds.width = width;
-        this.bounds.height = height;
-        this.width = this.bounds.width;
-        this.height = this.bounds.height;
+        this.width = width;
+        this.height = height;
 
-        //this.body.immovable = true;
-
+        this.body.immovable = true;
         this.renderable = false;
 
         this.callback = callback;
@@ -19,6 +16,7 @@
         this.callbackContext = callbackContext || this;
 
         game.add.existing(this);
+        game.debug.renderBodies.push(this);
     }
 
     TriggerBox.prototype = Object.create(Phaser.Sprite.prototype);

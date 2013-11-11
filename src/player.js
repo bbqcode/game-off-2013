@@ -22,6 +22,8 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
         this.animations.add('walk-right', [0, 1, 2, 3], 10, true);
         this.animations.add('walk-left', [4, 5, 6, 7], 10, true);        game.add.existing(this);
+        game.debug.renderBodies.push(this);
+        
         game.camera.follow(this);
     }
 

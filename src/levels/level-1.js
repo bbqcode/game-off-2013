@@ -29,16 +29,10 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
         
         game.player = this.player;
 
-        this.t = new TriggerBox(game, 150, 940, 100, 100, this.player, function () {
+        this.oldManTriggerBox = new TriggerBox(game, 150, 940, 100, 100, this.player, function () {
             console.log('Inside!');
         });
         
-        game.triggers = [];
-        game.triggers.push(this.t);
-
-        //var dialoguesTrigger = [];
-        //var dialogue = new Dialogue(');
-
 
         //trigger.push(new DialogueTrigger(x, y, w, h, dialogue, collider))
         
