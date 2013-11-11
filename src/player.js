@@ -67,6 +67,10 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
     }
 
     
+    //Player.prototype.render = function () {
+    //    this.game.debug.renderSpriteBody(this);
+    //}
+
     return Player;
 
 });

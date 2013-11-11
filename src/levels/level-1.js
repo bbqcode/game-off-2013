@@ -1,6 +1,7 @@
 ﻿/// <reference path="../libs/phaser.js" />
-define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, configs, assets) {
-    var Level = function (game) {
+define(['underscore', 'phaser', 'configs', 'assets', 'src/player', 'src/dialogue', 'src/trigger-box'],
+function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
+    var Level1 = function (game) {
         this.bg = game.add.tileSprite(0, 0, configs.game.width, configs.game.height, assets.images.sunshine.key);
         this.bg.fixedToCamera = true;
 
@@ -23,6 +24,24 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         this.tileset.setCollisionRange(0, this.tileset.total - 1, true, true, true, true)
 
         this.layers[0].resizeWorld();
+
+        this.player = new Player(game);
+        
+        game.player = this.player;
+
+        this.t = new TriggerBox(game, 150, 940, 100, 100, this.player, function () {
+            console.log('Inside!');
+        });
+        
+        game.triggers = [];
+        game.triggers.push(this.t);
+
+        //var dialoguesTrigger = [];
+        //var dialogue = new Dialogue(');
+
+
+        //trigger.push(new DialogueTrigger(x, y, w, h, dialogue, collider))
+        
     }
-    return Level;
+    return Level1;
 });
