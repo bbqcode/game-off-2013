@@ -2,16 +2,16 @@
 {
     tilemaps: {
         level1: {
-            src: 'assets/maps/map3.json'
+            src: 'assets/maps/level1.json'
         }
     },
 
     tilesets: {
         main: {
-            src: 'assets/tiles/sexy_tiles.png',
+            src: 'assets/tiles/main/main.png',
             tiles: {
-                width: 24,
-                height: 24
+                width: 32,
+                height: 32
             }
         },
     },
@@ -28,13 +28,6 @@
     },
 
     images: {
-        sunshine: {
-            src: 'assets/backgrounds/sunshine.png',
-            size: {
-                width: 800,
-                height: 600
-            }
-        },
         moon: {
             src: 'assets/images/moon.png',
             size: {
@@ -43,14 +36,14 @@
             }
         },
         star_small: {
-            src: 'assets/images/star-small.png',
+            src: 'assets/images/stars/star-small.png',
             size: {
                 width: 1,
                 height: 1
             }
         },
         star_medium: {
-            src: 'assets/images/star-med.png',
+            src: 'assets/images/stars/star-med.png',
             size: {
                 width: 3,
                 height: 3
