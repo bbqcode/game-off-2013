@@ -45,12 +45,13 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
 
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 1));
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 2));
-
+        this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 3));
 
         this.layers[0].fixedToCamera = false;
         this.layers[1].fixedToCamera = false;
+        this.layers[2].fixedToCamera = false;
 
-        this.collideLayer = this.layers[1];
+        this.collideLayer = this.layers[2];
 
         this.tileset.setCollisionRange(0, this.tileset.total - 1, true, true, true, true)
 

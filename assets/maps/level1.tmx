@@ -10,7 +10,12 @@
  </layer>
  <layer name="Passthrough" width="60" height="25">
   <data encoding="base64" compression="zlib">
-   eJzt0rENwCAMRUFWIYHsP2Lc0FJQgLDupN/zZEoBALhfjz2x7/RDNnljNdZOP2STrL3j386W6U+PO86W6cZ69eq9l169eoFVPxJXDmA=
+   eJzt0rkNADAIBEFa8dt/iSYhJAX5tCNd7hU2AwAA+NvxTd/tfkiR5Ru+3f2QIsq98Xezqf3puGU2tRvTS68SeulVQq92L9DtAVYhDRU=
+  </data>
+ </layer>
+ <layer name="Windows" width="60" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt0bEJADAMA0Gv5P2XywiGFAkWd41awVcBALBN/z4Al3pYdtM3m77Z9M2mL7xzAAzuBAY=
   </data>
  </layer>
  <layer name="Collide" width="60" height="25">
