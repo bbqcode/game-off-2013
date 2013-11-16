@@ -1,7 +1,7 @@
 ﻿define({
     game: {
         width: 800,
-        height: 600,
+        height: 500,
         canvasId: 'game'
     },
     player: {
@@ -12,5 +12,5 @@
     gravity: 10,
     bounce: 0.1,
 
-    debug: true
+    debug: false
 });
