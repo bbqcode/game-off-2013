@@ -16,5 +16,5 @@
 })
 
 require(['src/engine'], function (Engine) {
-   new Engine();
+   window.g = new Engine();
 });

@@ -5,6 +5,33 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
         //this.bg = game.add.tileSprite(0, 0, configs.game.width, configs.game.height, assets.images.sunshine.key);
         //this.bg.fixedToCamera = true;
        
+        var starLayer = game.add.group();
+        var starAsset1 = assets.images.star_small;
+        var starAsset2 = assets.images.star_medium;
+        var starAssets = [starAsset1, starAsset2];
+
+        var stars = [];
+
+        for (var i = 0; i < 500; i++) {
+            var idx = game.rnd.integerInRange(0, 2);
+            var star = starLayer.create(0, 0, starAssets[idx].key);
+            star.cameraOffset = new Phaser.Point(game.world.randomX, game.world.randomY);
+            star.fixedToCamera = true;
+            star.alpha = game.rnd.realInRange(0.1, 1);
+            stars.push(star);
+            
+        }
+        starLayer.fixedToCamera = true;
+
+        this.stars = stars;
+        
+
+        var moonAsset = assets.images.moon;
+        var moon = game.add.tileSprite(300, 40, moonAsset.size.width, moonAsset.size.height, moonAsset.key);
+
+        moon.fixedToCamera = true;
+        moon.cameraOffset = new Phaser.Point(80, 20);
+
 
         game.stage.backgroundColor = '#1d1426';
 
@@ -16,8 +43,9 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
 
         this.layers = [];
 
-        this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 0));
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 1));
+        this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 2));
+
 
         this.layers[0].fixedToCamera = false;
         this.layers[1].fixedToCamera = false;
@@ -37,23 +65,9 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox) {
         });
         
 
-        var moonAsset = assets.images.moon;
-        var moon = game.add.tileSprite(300, 40, moonAsset.size.width, moonAsset.size.height, moonAsset.key);
+       
         
-        moon.fixedToCamera = true;
-        moon.cameraOffset = new Phaser.Point(80, 20);
-        
-        var starLayer = game.add.group();
-        var starAsset1 = assets.images.star_small;
-        var starAsset2 = assets.images.star_medium;
-        var starAssets = [starAsset1, starAsset2];
-        for (var i = 0; i < 100; i++) {
-            var idx = game.rnd.integerInRange(0, 1);
-            var star = starLayer.create(0, 0, starAssets[idx].key);
-            star.cameraOffset = new Phaser.Point(game.world.randomX, game.world.randomY);
-            star.fixedToCamera = true;
-        }
-        starLayer.fixedToCamera = true;
+      
 
         //trigger.push(new DialogueTrigger(x, y, w, h, dialogue, collider))
         

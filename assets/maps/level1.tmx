@@ -8,6 +8,11 @@
    eJztwzENAAAMBKGz/P6XiugKCaumqqqqqqq+HiLSljs=
   </data>
  </layer>
+ <layer name="Passthrough" width="60" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt0rENwCAMRUFWIYHsP2Lc0FJQgLDupN/zZEoBALhfjz2x7/RDNnljNdZOP2STrL3j386W6U+PO86W6cZ69eq9l169eoFVPxJXDmA=
+  </data>
+ </layer>
  <layer name="Collide" width="60" height="25">
   <data encoding="base64" compression="zlib">
    eJztzlkKwCAMRVGNK6juf69F6EeQPIdS6M898MApMSkBAAAAAAAAwD/yExvWfl/cOgfvTNyr2Gbt7F/1Lurpz2qQJs57rsmdqm9DVvUnf9VFX9XjdJY3c32R3RnVuxvY0AjK
