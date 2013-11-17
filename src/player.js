@@ -4,7 +4,7 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
     var Player = function (game) {
         this.game = game;
 
-        this.playerSprite = assets.sprites.player;
+        this.playerSprite = assets.sprites.player_new;
         this.cursors = game.cursors;
         this.jumpTimer = 0;
 
@@ -20,8 +20,8 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
         this.body.collideWorldBounds = true;
 
-        this.animations.add('walk-right', [0, 1, 2, 3], 10, true);
-        this.animations.add('walk-left', [4, 5, 6, 7], 10, true);        game.add.existing(this);
+        this.animations.add('idle', [0, 1], 2, true);
+        //this.animations.add('walk-left', [4, 5, 6, 7], 10, true);        game.add.existing(this);
         game.debug.renderBodies.push(this);
         
         game.camera.follow(this);
@@ -52,6 +52,7 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         else {
             if (this.facing != 'idle') {
                 this.animations.stop();
+                this.animations.play('idle');
                 if (this.facing == 'right') {
                     this.frame = 0;
                 } else {

@@ -24,6 +24,14 @@
                 height: 48,
                 count: 8
             }
+        },
+        player_new: {
+            src: 'assets/sprites/dude.png',
+            frames: {
+                width: 32,
+                height: 48,
+                count: 2
+            }
         }
     },
 
