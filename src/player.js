@@ -20,15 +20,29 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
         this.body.collideWorldBounds = true;
 
+        var bounds = this.playerSprite.bounds;
+        this.body.setSize(bounds.width, bounds.height, bounds.offsetX, bounds.offsetY);
+
         this.animations.add('idle', [0, 1], 2, true);
         //this.animations.add('walk-left', [4, 5, 6, 7], 10, true);        game.add.existing(this);
         game.debug.renderBodies.push(this);
         
         game.camera.follow(this);
+
+        //this.scale.x = 10;
+        //this.scale.y = 10;
     }
 
     Player.prototype = Object.create(Phaser.Sprite.prototype);
     Player.prototype.constructor = Player;
+
+    Player.prototype.restart = function () {
+        var spawnPoint = this.game.level.spawnPoint;
+        var tween = this.game.add.tween(this).to(spawnPoint, 100, Phaser.Easing.Linear.None, true);
+
+        //  When the tween completes it calls descend, before looping again
+        //tween.onComplete.add(descend, this);
+    }
 
     Player.prototype.update = function () {
         this.game.physics.collide(this, this.game.level.collideLayer);
@@ -69,10 +83,10 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         }
     }
 
-    
-    //Player.prototype.render = function () {
-    //    this.game.debug.renderSpriteBody(this);
-    //}
+    Player.prototype.debugTeleport = function () {
+        var input = this.game.input;
+        this.centerOn(input.x, input.y);
+    }
 
     return Player;
 

@@ -12,5 +12,5 @@
     gravity: 10,
     bounce: 0.1,
 
-    debug: false
+    debug: true
 });

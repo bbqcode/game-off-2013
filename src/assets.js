@@ -31,6 +31,26 @@
                 width: 32,
                 height: 48,
                 count: 2
+            },
+            bounds: {
+                width: 12,
+                height: 38,
+                offsetX: 11,
+                offsetY: 10
+            }
+        },
+        saw: {
+            src: 'assets/sprites/saw.png',
+            frames: {
+                width: 32,
+                height: 32,
+                count: 4
+            },
+            bounds: {
+                width: 28,
+                height: 28,
+                offsetX: 2,
+                offsetY: 2
             }
         }
     },

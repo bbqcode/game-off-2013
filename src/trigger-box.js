@@ -15,6 +15,8 @@
         this.collider = collider;
         this.callbackContext = callbackContext || this;
 
+        this.setEnable(true);
+
         game.add.existing(this);
         game.debug.renderBodies.push(this);
     }
@@ -23,13 +25,17 @@
     TriggerBox.prototype.constructor = TriggerBox;
 
 
-    TriggerBox.prototype.update = function () {
-        if (this.bounds.intersects(this.collider.bounds)) {
-            this.callback.call(this.callbackContext, this, this.collider);
-        }
+    TriggerBox.prototype.setEnable = function (value) {
+        this.isEnabled = value;
     }
 
-    TriggerBox.prototype.render = function () {
+    TriggerBox.prototype.update = function () {
+        if (this.isEnabled) {
+            if (this.bounds.intersects(this.collider.bounds)) {
+                this.isEnabled = false;
+                this.callback.call(this.callbackContext, this, this.collider);
+            }
+        }
     }
 
     return TriggerBox;
