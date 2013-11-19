@@ -66,9 +66,23 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
           new Saw(game, 250, 32 * 21.5, 32, 32, this.player),
           new Saw(game, 310, 32 * 21.5, 32, 32, this.player),
           new Saw(game, 490, 32 * 21.5, 32, 32, this.player),
-          new Saw(game, 400, 32 * 21.5, 32, 32, this.player),
-          new Saw(game, 400, 32 * 18.5, 32, 32, this.player)
+          new Saw(game, 400, 32 * 21.5, 32, 32, this.player)
         ];
+
+        var movingSaw = new Saw(game, 400, 32 * 17.5, 32, 32, this.player);
+        saws.push(movingSaw);
+
+        var sawTween = game.add.tween(movingSaw)
+        sawTween.to({ y: 32 * 19.5 }, 1000, Phaser.Easing.Linear.None);
+        sawTween.to({ y: 32 * 17.5 }, 1000, Phaser.Easing.Linear.None);
+        sawTween.loop().start();
+
+        var movingSaw2 = new Saw(game, 550, 32 * 21.5, 32, 32, this.player)
+        game.add.tween(movingSaw2)
+            .to({ x: 800 }, 1500, Phaser.Easing.Bounce.Out)
+            .to({ x: 550 }, 1500, Phaser.Easing.Bounce.Out)
+            .loop().start();
+        saws.push(movingSaw2);
 
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 2));
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 3));

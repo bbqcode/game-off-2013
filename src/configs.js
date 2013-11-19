@@ -6,7 +6,7 @@
     },
     player: {
         jumpVelocity: -300,
-        jumpTimer: 750
+        jumpTimer: 200
     },
 
     gravity: 20,
