@@ -14,6 +14,8 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
         //this.bg = game.add.tileSprite(0, 0, configs.game.width, configs.game.height, assets.images.sunshine.key);
         //this.bg.fixedToCamera = true;
        
+   
+
         var starLayer = game.add.group();
         var starAsset1 = assets.images.star_small;
         var starAsset2 = assets.images.star_medium;
@@ -38,7 +40,7 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
         var moonAsset = assets.images.moon;
         var moon = game.add.tileSprite(300, 40, moonAsset.size.width, moonAsset.size.height, moonAsset.key);
 
-        this.spawnPoint = new Phaser.Point(140, 300);
+        
 
         moon.fixedToCamera = true;
         moon.cameraOffset = new Phaser.Point(80, 20);
@@ -55,6 +57,19 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
         this.layers = [];
 
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 1));
+        this.spawnPoint = new Phaser.Point(50, 650);
+        this.player = new Player(game);
+        this.player.centerOn(this.spawnPoint.x, this.spawnPoint.y);
+
+        game.player = this.player;
+        var saws = [
+          new Saw(game, 250, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, 310, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, 490, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, 400, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, 400, 32 * 18.5, 32, 32, this.player)
+        ];
+
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 2));
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 3));
 
@@ -68,12 +83,8 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
 
         this.layers[0].resizeWorld();
 
-        this.player = new Player(game);
-        this.player.centerOn(this.spawnPoint.x, this.spawnPoint.y);
         
-        game.player = this.player;
-
-        var triggerPosition = new Phaser.Point(1100, 606);
+        var triggerPosition = new Phaser.Point(650, 606);
         this.oldManTriggerBox = new TriggerBox(game, triggerPosition.x, triggerPosition.y, 100, 100, this.player, function () {
             var text = "Yay, you won!";
             var style = { font: "65px Helvetica", fill: "#ff0044", align: "center" };
@@ -84,28 +95,6 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
             }, 2500)
             t.anchor.setTo(0.5, 0.5);
         });
-
-        var saws = [
-            new Saw(game, 350, 32 * 19, 32, 32, this.player),
-            new Saw(game, 350, 32 * 20, 32, 32, this.player),
-            new Saw(game, 350, 32 * 21, 32, 32, this.player),
-
-            new Saw(game, 450, 32 * 19, 32, 32, this.player),
-            new Saw(game, 450, 32 * 20, 32, 32, this.player),
-            new Saw(game, 450, 32 * 21, 32, 32, this.player),
-
-            new Saw(game, 535, 32 * 19, 32, 32, this.player),
-            new Saw(game, 535, 32 * 20, 32, 32, this.player),
-            new Saw(game, 535, 32 * 21, 32, 32, this.player),
-
-            new Saw(game, 610, 32 * 19, 32, 32, this.player),
-            new Saw(game, 610, 32 * 20, 32, 32, this.player),
-            new Saw(game, 610, 32 * 21, 32, 32, this.player),
-
-            new Saw(game, 680, 32 * 19, 32, 32, this.player),
-            new Saw(game, 680, 32 * 20, 32, 32, this.player),
-            new Saw(game, 680, 32 * 21, 32, 32, this.player)
-        ];
         
         if (configs.debug) {
             game.input.onDown.add(this.player.debugTeleport, this.player);

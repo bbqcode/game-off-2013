@@ -38,7 +38,7 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
     Player.prototype.restart = function () {
         var spawnPoint = this.game.level.spawnPoint;
-        var tween = this.game.add.tween(this).to(spawnPoint, 100, Phaser.Easing.Linear.None, true);
+        var tween = this.game.add.tween(this).to(spawnPoint, 10, Phaser.Easing.Linear.None, true);
 
         //  When the tween completes it calls descend, before looping again
         //tween.onComplete.add(descend, this);
@@ -47,23 +47,50 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
     Player.prototype.update = function () {
         this.game.physics.collide(this, this.game.level.collideLayer);
 
-        this.body.velocity.x = 0;
+        //this.body.velocity.x = 0;
+
+        var MAX_SPEED = 160;
+
+        var delta = this.game.time.elapsed;
+        var slideMagicNumber = 15;
+        var runMagicNumber = 0.8;
+        var actualSlide = delta + slideMagicNumber;
+
+
 
         if (this.cursors.left.isDown) {
-            this.body.velocity.x = -150;
+            this.body.velocity.x -= delta * runMagicNumber;
+            if (this.body.velocity.x < MAX_SPEED * -1) {
+                this.body.velocity.x = MAX_SPEED * -1;
+            }
             if (this.facing != 'left') {
                 this.facing = 'left';
                 this.animations.play('walk-left');
             }
         }
         else if (this.cursors.right.isDown) {
-            this.body.velocity.x = 150;
+            this.body.velocity.x += delta * runMagicNumber;
+            if (this.body.velocity.x > MAX_SPEED) {
+                this.body.velocity.x = MAX_SPEED;
+            }
             if (this.facing != 'right') {
                 this.facing = 'right';
                 this.animations.play('walk-right');
             }
         }
         else {
+            if (this.body.velocity.x > 0) {
+                this.body.velocity.x -= actualSlide;
+                if (this.body.velocity.x < 0) {
+                    this.body.velocity.x = 0;
+                }
+            } else if (this.body.velocity.x < 0) {
+                this.body.velocity.x += actualSlide;
+                if (this.body.velocity.x > 0) {
+                    this.body.velocity.x = 0;
+                }
+            }
+
             if (this.facing != 'idle') {
                 this.animations.stop();
                 this.animations.play('idle');

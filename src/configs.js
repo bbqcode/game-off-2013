@@ -5,12 +5,12 @@
         canvasId: 'game'
     },
     player: {
-        jumpVelocity: -400,
+        jumpVelocity: -300,
         jumpTimer: 750
     },
 
-    gravity: 10,
+    gravity: 20,
     bounce: 0.1,
 
-    debug: true
+    debug: false
 });
