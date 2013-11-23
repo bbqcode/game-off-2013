@@ -1,16 +1,20 @@
 ﻿define({
     game: {
-        width: 800,
-        height: 500,
+        width: 360,
+        height: 225,
         canvasId: 'game'
     },
     player: {
-        jumpVelocity: -300,
-        jumpTimer: 200
+        jumpVelocity: 4.5,
+        jumpDuration: 150,
+        cannotJumpUntil: 80,
+        drag: 3000,
+        acceleration: 1000,
+        maxVelocity: 155
     },
 
-    gravity: 20,
-    bounce: 0.1,
+    gravity: 40,
+    bounce: 0,
 
     debug: false
 });

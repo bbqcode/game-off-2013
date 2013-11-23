@@ -5,7 +5,7 @@ define(['phaser', 'configs', 'src/game'], function (Phaser, configs, states) {
             this,
             configs.game.width, configs.game.height,
             Phaser.CANVAS, configs.game.canvasId,
-            states
+            states, false, false
         );
     }
     

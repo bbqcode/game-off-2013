@@ -13,8 +13,8 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
     var Level1 = function (game) {
         //this.bg = game.add.tileSprite(0, 0, configs.game.width, configs.game.height, assets.images.sunshine.key);
         //this.bg.fixedToCamera = true;
-       
-   
+
+
 
         var starLayer = game.add.group();
         var starAsset1 = assets.images.star_small;
@@ -23,12 +23,12 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
 
         var stars = [];
 
-        for (var i = 0; i < 500; i++) {
+        for (var i = 0; i < 200; i++) {
             var idx = game.rnd.integerInRange(0, 2);
             var star = starLayer.create(0, 0, starAssets[idx].key);
             star.cameraOffset = new Phaser.Point(game.world.randomX, game.world.randomY);
             star.fixedToCamera = true;
-            star.alpha = game.rnd.realInRange(0.1, 1);
+            star.alpha = game.rnd.realInRange(0.05, 1);
             stars.push(star);
             
         }
@@ -36,20 +36,22 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
 
         this.stars = stars;
         
-
-        var moonAsset = assets.images.moon;
-        var moon = game.add.tileSprite(300, 40, moonAsset.size.width, moonAsset.size.height, moonAsset.key);
-
-        
-
-        moon.fixedToCamera = true;
-        moon.cameraOffset = new Phaser.Point(80, 20);
+//
+//        var moonAsset = assets.images.moon;
+//        var moon = game.add.tileSprite(300, 40, moonAsset.size.width, moonAsset.size.height, moonAsset.key);
+//
+//
+//
+//        moon.fixedToCamera = true;
+//        moon.cameraOffset = new Phaser.Point(80, 20);
 
 
         game.stage.backgroundColor = '#1d1426';
 
         this.map = game.add.tilemap(assets.tilemaps.level1.key);
         this.tileset = game.add.tileset(assets.tilesets.main.key);
+
+
 
         var width = this.map.layers[0].width * this.tileset.tileWidth;
         var height = this.map.layers[0].height * this.tileset.tileHeight;
@@ -97,7 +99,6 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
 
         this.layers[0].resizeWorld();
 
-        
         var triggerPosition = new Phaser.Point(650, 606);
         this.oldManTriggerBox = new TriggerBox(game, triggerPosition.x, triggerPosition.y, 100, 100, this.player, function () {
             var text = "Yay, you won!";

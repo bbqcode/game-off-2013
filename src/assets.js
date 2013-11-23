@@ -13,7 +13,7 @@
                 width: 32,
                 height: 32
             }
-        },
+        }
     },
 
     sprites: {
@@ -35,7 +35,7 @@
             bounds: {
                 width: 12,
                 height: 38,
-                offsetX: 11,
+                offsetX: 0,
                 offsetY: 10
             }
         },

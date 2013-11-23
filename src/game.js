@@ -5,6 +5,12 @@ function (Phaser, Player, Level1, Loader, configs) {
     }
 
     function create() {
+        Phaser.Canvas.setSmoothingEnabled(this.game.context, false);
+
+        this.game.stage.scaleMode = Phaser.StageScaleMode.SHOW_ALL;
+        this.game.stage.scale.setShowAll();
+        this.game.stage.scale.refresh();
+
         this.game.debug.renderBodies = [];
         this.game.cursors = this.game.input.keyboard.createCursorKeys();
         this.game.level = new Level1(this.game);
