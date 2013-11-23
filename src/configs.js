@@ -4,16 +4,21 @@
         height: 225,
         canvasId: 'game'
     },
+    camera: {
+        deadzoneHeight: 150,
+        deadzoneY: 40
+    },
     player: {
-        jumpVelocity: 4.5,
-        jumpDuration: 150,
+        jumpDuration: 200,
         cannotJumpUntil: 80,
-        drag: 3000,
-        acceleration: 1000,
-        maxVelocity: 155
+        jumpForce: 140,
+        accelerationX: 2000,
+        accelerationY : 3500 ,
+        maxVelocityX: 200,
+        maxVelocityY: 350
     },
 
-    gravity: 40,
+    gravity: 40 ,
     bounce: 0,
 
     debug: false

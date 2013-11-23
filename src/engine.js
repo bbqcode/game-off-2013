@@ -1,5 +1,11 @@
 ﻿/// <reference path="../libs/phaser.js" />
 define(['phaser', 'configs', 'src/game'], function (Phaser, configs, states) {
+    Phaser.Sprite.prototype.getBodyBounds = function () {
+        var b = this.body;
+        return new Phaser.Rectangle(b.screenX, b.screenY, b.width, b.height);
+    }
+
+
     var Engine = function () {
         Phaser.Game.call(
             this,

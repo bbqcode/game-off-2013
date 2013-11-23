@@ -47,10 +47,10 @@
                 count: 4
             },
             bounds: {
-                width: 28,
-                height: 28,
-                offsetX: 2,
-                offsetY: 2
+                width: 26,
+                height: 26,
+                offsetX: 3,
+                offsetY: 3
             }
         }
     },

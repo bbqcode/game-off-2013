@@ -27,8 +27,9 @@ function (Phaser, Player, Level1, Loader, configs) {
             this.game.debug.renderSpriteBody(bodies[i]);
         }
 
-        this.game.debug.renderSpriteInfo(this.game.player, 32, 32);
-        this.game.debug.renderSpriteCollision(this.game.player, 32, 400);
+        this.game.debug.renderRectangle(this.game.camera.deadzone);
+        //this.game.debug.renderSpriteInfo(this.game.player, 32, 32);
+        this.game.debug.renderSpriteCollision(this.game.player, 0, 0);
     }
 
     return {

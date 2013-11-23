@@ -4,22 +4,25 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
     var Player = function (game) {
         this.game = game;
         this.keyboard = game.input.keyboard;
+
+        var spacebar = this.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        spacebar.onDown.add(this.initJump, this);
+
+        var leftKey = this.keyboard.addKey(Phaser.Keyboard.LEFT);
+        leftKey.onUp.add(this.releasedLeft, this);
+        var rightKey = this.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        rightKey.onUp.add(this.releasedRight, this);
+
         this.playerSprite = assets.sprites.player_new;
         this.cannotJumpUntil = 0;
         this.canJumpUntil = 0;
-
-        this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
         this.facing = 'right';
 
         Phaser.Sprite.call(this, game, 0, 0, this.playerSprite.key);
 
         this.body.gravity.y = configs.gravity;
-        this.body.bounce.y = configs.bounce;
-        this.body.drag.x = configs.player.drag;
-        this.body.maxVelocity.x = configs.player.maxVelocity;
-//        this.body.maxVelocity.y = configs.player.maxVelocity;
-        this.body.drag.y = 0;
+        this.body.maxVelocity.x = configs.player.maxVelocityX;
 
         this.body.collideWorldBounds = true;
 
@@ -29,15 +32,14 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         this.body.setSize(bounds.width, bounds.height, bounds.offsetX, bounds.offsetY);
 
         this.animations.add('idle', [0, 1], 2, true);
-        //this.animations.add('walk-left', [4, 5, 6, 7], 10, true);
 
         game.add.existing(this);
         game.debug.renderBodies.push(this);
         
-        game.camera.follow(this);
+        game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);;
 
-        //this.scale.x = 10;
-        //this.scale.y = 10;
+        game.camera.deadzone.height = configs.camera.deadzoneHeight;
+        game.camera.deadzone.y = configs.camera.deadzoneY;
     }
 
     Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -45,81 +47,92 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
     Player.prototype.restart = function () {
         var spawnPoint = this.game.level.spawnPoint;
-        var tween = this.game.add.tween(this).to(spawnPoint, 10, Phaser.Easing.Linear.None, true);
+        this.game.add.tween(this).to(spawnPoint, 10, Phaser.Easing.Linear.None, true);
+    }
 
-        //  When the tween completes it calls descend, before looping again
-        //tween.onComplete.add(descend, this);
+    Player.prototype.setFacing = function (side) {
+        if (this.facing != side) {
+            this.scale.x = side === 'left' ? 1 : -1;
+            this.facing = side;
+            this.animations.play('walk-' + side);
+        }
     }
 
     Player.prototype.update = function () {
         this.game.physics.collide(this, this.game.level.collideLayer);
 
+        var now = this.game.time.now,
+            body = this.body,
+            velocity = body.velocity,
+            acceleration = body.acceleration,
+            isTouchingDown = body.touching.down,
+            isPressingRight = this.keyboard.isDown(Phaser.Keyboard.RIGHT),
+            isPressingLeft = this.keyboard.isDown(Phaser.Keyboard.LEFT);
 
-        var isTouchingDown = this.body.touching.down;
-        if (isTouchingDown) {
-            this.body.drag.x = configs.player.drag;
+
+        if (isPressingRight) {
+            acceleration.x = configs.player.accelerationX;
+        }
+        if (isPressingLeft) {
+            acceleration.x = -configs.player.accelerationX;
+        }
+        if (isPressingRight && isPressingLeft) {
+            velocity.x = 0;
+            acceleration.x = 0;
+        }
+
+        if (isTouchingDown && velocity.y > 0) {
+
+        }
+
+        if (acceleration.x === 0) {
+            //todo: set idles animation
+        } else if (acceleration.x > 0) {
+            this.setFacing('left');
         } else {
-            this.body.drag.x = 0;
+            this.setFacing('right');
         }
 
-        if (
-                this.keyboard.justReleased(Phaser.Keyboard.LEFT) ||
-                this.keyboard.justReleased(Phaser.Keyboard.RIGHT))
-        {
-            this.body.acceleration.x = 0;
-        }
-        if (this.keyboard.isDown(Phaser.Keyboard.RIGHT)) {
-            if (this.body.velocity.x < 0) {
-                this.body.velocity.x = 0;
-            }
-            this.body.acceleration.x = configs.player.acceleration;
-            if (this.facing != 'left') {
-                this.scale.x = 1;
-                this.facing = 'left';
-                this.animations.play('walk-left');
-            }
-        }
-        else if (this.keyboard.isDown(Phaser.Keyboard.LEFT)) {
-            if (this.body.velocity.x > 0) {
-                this.body.velocity.x = 0;
-            }
-            this.body.acceleration.x = -configs.player.acceleration;
-            if (this.facing != 'right') {
-                this.scale.x = -1;
-                this.facing = 'right';
-                this.animations.play('walk-right');
-            }
-        }
-        else {
-            if (this.facing != 'idle') {
-                this.animations.stop();
-                this.animations.play('idle');
-                if (this.facing == 'right') {
-                    this.frame = 0;
-                } else {
-                    this.frame = 4;
-                }
-                this.facing = 'idle';
-            }
-        }
+        var canKeepJumping = !isTouchingDown && now < this.canJumpUntil,
+            isPressingJump = this.keyboard.isDown(Phaser.Keyboard.SPACEBAR);
 
-        var now = this.game.time.now;
+        if (isPressingJump && canKeepJumping){
+            acceleration.y = -configs.player.accelerationY;
+        } else {
+            acceleration.y = 0;
 
-        if (isTouchingDown) {
-            this.canJumpUntil = now + configs.player.jumpDuration ;
+            if (!isPressingRight && !isPressingLeft) {
+                acceleration.x = 0;
+                velocity.x = 0;
+            }
         }
-        if (isTouchingDown && this.isJumping) {
+    }
+
+    Player.prototype.initJump = function() {
+        if (this.body.touching.down) {
+            var now = this.game.time.now;
             this.cannotJumpUntil = now + configs.player.cannotJumpUntil;
-            this.isJumping = false;
+            this.canJumpUntil = now + configs.player.jumpDuration;
+            this.body.velocity.y -= configs.player.jumpForce;
+//
+//            if (this.body.velocity.x > 0){
+//                this.body.velocity.x -= 50;
+//            }else if (this.body.velocity.x < 0) {
+//                this.body.velocity.x += 50;
+//            }
         }
+    }
 
-        var canJump = isTouchingDown && now > this.cannotJumpUntil;
-        var canKeepJumping = !isTouchingDown && now < this.canJumpUntil;
-        var isPressingJump = this.keyboard.isDown(Phaser.Keyboard.SPACEBAR);
-
-        if (isPressingJump && (canJump ||canKeepJumping)) {
-            this.isJumping = true;
-            this.body.velocity.y -= configs.player.jumpVelocity * this.game.time.elapsed;
+    Player.prototype.releasedLeft = function() {
+        if (this.body.velocity.x < 0) {
+            this.body.acceleration.x = 0;
+            this.body.velocity.x = 0;
+        }
+    }
+    Player.prototype.releasedRight = function() {
+        if (this.body.velocity.x > 0) {
+            this.body.acceleration.x = 0;
+            this.body.velocity.x = 0;
         }
     }
 

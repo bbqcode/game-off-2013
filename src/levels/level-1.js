@@ -59,25 +59,25 @@ function (_, Phaser, configs, assets, Player, Dialogue, TriggerBox, Saw) {
         this.layers = [];
 
         this.layers.push(game.add.tilemapLayer(0, 0, width, height, this.tileset, this.map, 1));
-        this.spawnPoint = new Phaser.Point(50, 650);
+        this.spawnPoint = new Phaser.Point(20, 650);
         this.player = new Player(game);
         this.player.centerOn(this.spawnPoint.x, this.spawnPoint.y);
 
         game.player = this.player;
+        var sawX = 350
         var saws = [
-          new Saw(game, 250, 32 * 21.5, 32, 32, this.player),
-          new Saw(game, 310, 32 * 21.5, 32, 32, this.player),
-          new Saw(game, 490, 32 * 21.5, 32, 32, this.player),
-          new Saw(game, 400, 32 * 21.5, 32, 32, this.player)
+          new Saw(game, sawX, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, sawX+70, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, sawX+180, 32 * 21.5, 32, 32, this.player),
+          new Saw(game, sawX+270, 32 * 21.5, 32, 32, this.player)
         ];
 
-        var movingSaw = new Saw(game, 400, 32 * 17.5, 32, 32, this.player);
+        var movingSaw = new Saw(game, 500, 32 * 17.5, 32, 32, this.player);
+        game.add.tween(movingSaw)
+            .to({ y: 32 * 21 }, 1000, Phaser.Easing.Linear.None)
+            .to({ y: 32 * 17.5 }, 1000, Phaser.Easing.Linear.None)
+            .loop().start();
         saws.push(movingSaw);
-
-        var sawTween = game.add.tween(movingSaw)
-        sawTween.to({ y: 32 * 19.5 }, 1000, Phaser.Easing.Linear.None);
-        sawTween.to({ y: 32 * 17.5 }, 1000, Phaser.Easing.Linear.None);
-        sawTween.loop().start();
 
         var movingSaw2 = new Saw(game, 550, 32 * 21.5, 32, 32, this.player)
         game.add.tween(movingSaw2)

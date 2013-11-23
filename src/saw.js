@@ -27,11 +27,12 @@
     Saw.prototype.constructor = Saw;
 
     Saw.prototype.update = function () {
-        var self = this;
-        var test = function () {
-            self.player.restart();
+        var saw = this.getBodyBounds();
+        var player = this.player.getBodyBounds();
+
+        if (saw.intersects(player)) {
+            this.player.restart();
         }
-        this.game.physics.collide(this, this.player, test, null, this);
     }
 
     return Saw;
