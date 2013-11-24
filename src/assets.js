@@ -10,47 +10,39 @@
         main: {
             src: 'assets/tiles/main/main.png',
             tiles: {
-                width: 32,
-                height: 32
+                width: 64,
+                height: 64
             }
         }
     },
 
     sprites: {
         player: {
-            src: 'assets/sprites/produde.png',
-            frames: {
-                width: 18,
-                height: 48,
-                count: 8
-            }
-        },
-        player_new: {
             src: 'assets/sprites/dude.png',
             frames: {
-                width: 32,
-                height: 48,
+                width: 149,
+                height: 200,
                 count: 2
             },
             bounds: {
-                width: 12,
-                height: 38,
+                width: 65,
+                height: 180,
                 offsetX: 0,
-                offsetY: 10
+                offsetY: 20
             }
         },
         saw: {
             src: 'assets/sprites/saw.png',
             frames: {
-                width: 32,
-                height: 32,
+                width: 96,
+                height: 96,
                 count: 4
             },
             bounds: {
-                width: 26,
-                height: 26,
-                offsetX: 3,
-                offsetY: 3
+                width: 76,
+                height: 76,
+                offsetX: 10,
+                offsetY: 10
             }
         }
     },
@@ -75,6 +67,16 @@
             size: {
                 width: 3,
                 height: 3
+            }
+        }
+    },
+
+    levels : {
+        level1: {
+            backgroundColor : '#1d1426',
+            spawnPoint : {
+                x: 100,
+                y: 650
             }
         }
     }

@@ -1,24 +1,22 @@
 ﻿define({
     game: {
-        width: 360,
-        height: 225,
+        width: 1280,
+        height: 800,
         canvasId: 'game'
     },
     camera: {
-        deadzoneHeight: 150,
-        deadzoneY: 40
+        groundHeight: 160
     },
     player: {
-        jumpDuration: 200,
-        cannotJumpUntil: 80,
-        jumpForce: 140,
-        accelerationX: 2000,
-        accelerationY : 3500 ,
-        maxVelocityX: 200,
-        maxVelocityY: 350
+        jumpDuration: 150,
+        jumpForce: 100,
+        accelerationX: 4000,
+        accelerationY : 10000,
+        maxVelocityX: 650
+        //maxVelocityY: 350
     },
 
-    gravity: 40 ,
+    gravity: 55,
     bounce: 0,
 
     debug: false

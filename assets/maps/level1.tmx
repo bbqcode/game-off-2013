@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="60" height="25" tilewidth="32" tileheight="32">
- <tileset firstgid="1" name="main" tilewidth="32" tileheight="32">
-  <image source="../tiles/main/main.png" width="512" height="256"/>
+<map version="1.0" orientation="orthogonal" width="80" height="14" tilewidth="64" tileheight="64">
+ <tileset firstgid="1" name="main" tilewidth="64" tileheight="64">
+  <image source="../tiles/main/main.png" width="1024" height="512"/>
  </tileset>
- <layer name="Background" width="60" height="25">
+ <layer name="Passthrough" width="80" height="14">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAMBKGz/P6XiugKCaumqqqqqqq+HiLSljs=
+   eJztlOEKwCAIhH2VzW3v/4hzPwYRGaYFSh7cv4Z3Xy4AH0LyUfjaZDanm3ySH+F5b/y+/NLsKzNJOWj4/XdUe7R3azYKM8yUpY+GX/2Ndne98LP0icpPs+/SHKv4cXuu/Y8t/Ga+1T1+ZedWrxF+3BztHkbgh9DvlfySn1XJz6Yd+aVSqbh6AdQxKXM=
   </data>
  </layer>
- <layer name="Passthrough" width="60" height="25">
+ <layer name="Windows" width="80" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0rkNADAIBEFa8dt/iSYhJAX5tCNd7hU2AwAA+NvxTd/tfkiR5Ru+3f2QIsq98Xezqf3puGU2tRvTS68SeulVQq92L9DtAVYhDRU=
+   eJzt1DEKACAMQ9Feqfe/nLg6VGKREvhvcVFKITECwJbHqd5X33dmAz9N5bDTpckOvc527fvt73Pdq5Lhsxf91Tjk1il/AIDaAiGnBoM=
   </data>
  </layer>
- <layer name="Windows" width="60" height="25">
+ <layer name="Collision" width="80" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0bEJADAMA0Gv5P2XywiGFAkWd41awVcBALBN/z4Al3pYdtM3m77Z9M2mL7xzAAzuBAY=
-  </data>
- </layer>
- <layer name="Collide" width="60" height="25">
-  <data encoding="base64" compression="zlib">
-   eJztzlkKwCAMRVGNK6juf69F6EeQPIdS6M898MApMSkBAAAAAAAAwD/yExvWfl/cOgfvTNyr2Gbt7F/1Lurpz2qQJs57rsmdqm9DVvUnf9VFX9XjdJY3c32R3RnVuxvY0AjK
+   eJztkEsKwCAMRNN6grb3v6sbF1JqfmZTeA8GUcxMEhEAAAAAAAD4A8dCbZyn8seSt7ZtZESzMl5af/ek53VfvVnSaq6EXzQjoq9+Mt6Zuap2Ua2q3Xpm7VflC5w=
   </data>
  </layer>
 </map>

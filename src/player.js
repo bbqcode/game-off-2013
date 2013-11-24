@@ -13,8 +13,7 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         var rightKey = this.keyboard.addKey(Phaser.Keyboard.RIGHT);
         rightKey.onUp.add(this.releasedRight, this);
 
-        this.playerSprite = assets.sprites.player_new;
-        this.cannotJumpUntil = 0;
+        this.playerSprite = assets.sprites.player;
         this.canJumpUntil = 0;
 
         this.facing = 'right';
@@ -38,16 +37,24 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         
         game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);;
 
-        game.camera.deadzone.height = configs.camera.deadzoneHeight;
-        game.camera.deadzone.y = configs.camera.deadzoneY;
+        game.camera.deadzone.height = configs.game.height - configs.camera.groundHeight;
+        game.camera.deadzone.y = 0;
     }
 
     Player.prototype = Object.create(Phaser.Sprite.prototype);
     Player.prototype.constructor = Player;
 
+    Player.prototype.movePlayerTo = function(x, y) {
+        this.renderable = false;
+        this.body.acceleration = new Phaser.Point(0,0);
+        this.body.velocity = new Phaser.Point(0,0);
+        this.reset(x, y);
+        this.renderable = true;
+    }
+
     Player.prototype.restart = function () {
         var spawnPoint = this.game.level.spawnPoint;
-        this.game.add.tween(this).to(spawnPoint, 10, Phaser.Easing.Linear.None, true);
+        this.movePlayerTo(spawnPoint.x, spawnPoint.y);
     }
 
     Player.prototype.setFacing = function (side) {
@@ -111,7 +118,6 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
     Player.prototype.initJump = function() {
         if (this.body.touching.down) {
             var now = this.game.time.now;
-            this.cannotJumpUntil = now + configs.player.cannotJumpUntil;
             this.canJumpUntil = now + configs.player.jumpDuration;
             this.body.velocity.y -= configs.player.jumpForce;
 //
@@ -138,7 +144,7 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
 
     Player.prototype.debugTeleport = function () {
         var input = this.game.input;
-        this.centerOn(input.x, input.y);
+        this.movePlayerTo(input.worldX, input.worldY);
     }
 
     return Player;

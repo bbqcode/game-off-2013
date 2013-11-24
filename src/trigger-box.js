@@ -28,10 +28,10 @@
     TriggerBox.prototype.setEnable = function (value) {
         this.isEnabled = value;
     }
-
+0
     TriggerBox.prototype.update = function () {
         if (this.isEnabled) {
-            if (this.bounds.intersects(this.collider.bounds)) {
+            if (this.bounds.intersects(this.collider.getBodyBounds())) {
                 this.isEnabled = false;
                 this.callback.call(this.callbackContext, this, this.collider);
             }
