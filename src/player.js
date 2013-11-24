@@ -76,6 +76,14 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
             isPressingRight = this.keyboard.isDown(Phaser.Keyboard.RIGHT),
             isPressingLeft = this.keyboard.isDown(Phaser.Keyboard.LEFT);
 
+        var canKeepJumping = !isTouchingDown && now < this.canJumpUntil,
+            isPressingJump = this.keyboard.isDown(Phaser.Keyboard.SPACEBAR);
+
+        if (isPressingJump && canKeepJumping){
+            acceleration.y = -configs.player.accelerationY;
+        } else {
+            acceleration.y = 0;
+        }
 
         if (isPressingRight) {
             acceleration.x = configs.player.accelerationX;
@@ -83,13 +91,10 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         if (isPressingLeft) {
             acceleration.x = -configs.player.accelerationX;
         }
-        if (isPressingRight && isPressingLeft) {
+
+        if (isPressingRight == isPressingLeft) {
             velocity.x = 0;
             acceleration.x = 0;
-        }
-
-        if (isTouchingDown && velocity.y > 0) {
-
         }
 
         if (acceleration.x === 0) {
@@ -99,20 +104,6 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
         } else {
             this.setFacing('right');
         }
-
-        var canKeepJumping = !isTouchingDown && now < this.canJumpUntil,
-            isPressingJump = this.keyboard.isDown(Phaser.Keyboard.SPACEBAR);
-
-        if (isPressingJump && canKeepJumping){
-            acceleration.y = -configs.player.accelerationY;
-        } else {
-            acceleration.y = 0;
-
-            if (!isPressingRight && !isPressingLeft) {
-                acceleration.x = 0;
-                velocity.x = 0;
-            }
-        }
     }
 
     Player.prototype.initJump = function() {
@@ -120,12 +111,6 @@ define(['underscore', 'phaser', 'configs', 'assets'], function (_, Phaser, confi
             var now = this.game.time.now;
             this.canJumpUntil = now + configs.player.jumpDuration;
             this.body.velocity.y -= configs.player.jumpForce;
-//
-//            if (this.body.velocity.x > 0){
-//                this.body.velocity.x -= 50;
-//            }else if (this.body.velocity.x < 0) {
-//                this.body.velocity.x += 50;
-//            }
         }
     }
 

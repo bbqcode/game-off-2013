@@ -25,7 +25,7 @@
                 count: 2
             },
             bounds: {
-                width: 65,
+                width: 40,
                 height: 180,
                 offsetX: 0,
                 offsetY: 20
@@ -76,7 +76,7 @@
             backgroundColor : '#1d1426',
             spawnPoint : {
                 x: 100,
-                y: 650
+                y: 500
             }
         }
     }
