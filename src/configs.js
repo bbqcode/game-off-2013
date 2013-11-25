@@ -19,5 +19,5 @@
     gravity: 55,
     bounce: 0,
 
-    debug: true
+    debug: false
 });
